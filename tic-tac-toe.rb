@@ -22,6 +22,15 @@ class GameBoard
     def display_board
         puts @board_array
     end
+    def player_move(selection)
+        if selection == 1..3
+            #add selection to first array item
+        elsif selection == 4..6
+            #add selection to second array item
+        else
+            #add selection to third array item
+        end
+    end
 end
 
 #Objects
@@ -30,4 +39,6 @@ player1 = Player.new(gets)
 player2 = Player.new(gets)
 
 #Game Loop
-board.display_board
+#while game_playing? == true do
+    
+#end
