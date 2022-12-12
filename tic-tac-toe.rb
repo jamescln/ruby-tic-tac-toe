@@ -38,11 +38,11 @@ class GameBoard
         self.row_select(gets)
         puts "Enter the column you wish to select (1, 2 or 3)"
         self.column_select(gets)
-        if @board_array[@row][@column] != 'X' || @board_array[@row][@column] != 'O'
-            @board_array[@row][@column] = symbol
-        else
+        if @board_array[@row][@column] == 'X' || @board_array[@row][@column] == 'O'
             puts "That space is taken. Please select an empty space."
             self.place_symbol(symbol)
+        else
+            @board_array[@row][@column] = symbol
         end
     end
 end
@@ -56,17 +56,14 @@ player2 = Player.new(gets)
 
 #Game Loop
 #while game_playing == true do
+for i in 0..1 do 
     #sets player symbol
     player_symbol = player1_turn ? 'X' : 'O'
-    #get player input
     puts "#{player1_turn ? player1.name : player2.name}, it's your turn!"
-    #board.row_select(gets)
-    #puts "Now enter the column you want to select (1, 2 or 3)"
-    #board.column_select(gets)
-    #place the player's symbol in the desired location
+    # get player input and place the player's symbol in the desired location
     board.place_symbol(player_symbol)
     #output board state
     board.display_board
     #change player turn and player symbol
-    player1_turn ? false : true
-#end
+    player1_turn ? player1_turn = false : player1_turn = true
+end
