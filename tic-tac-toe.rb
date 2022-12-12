@@ -3,18 +3,12 @@ require 'pry-byebug'
 #Variables
 game_playing = true
 player1_turn = true
+puts "Player 1, type your name!"
+player1_name = gets
+puts "Player 2, type your name!"
+player2_name = gets
 
 #Classes
-class Player
-    def initialize(name)
-        @name = name
-    end
-    def name
-        return @name.chomp
-    end
-    
-end
-
 class GameBoard
     def initialize
         @board_array = [['#','#','#'],['#','#','#'],['#','#','#']]
@@ -47,19 +41,15 @@ class GameBoard
     end
 end
 
-#Objects / Init
+#Instances
 board = GameBoard.new
-puts "Player 1, type your name!"
-player1 = Player.new(gets)
-puts "Player 2, type your name!"
-player2 = Player.new(gets)
 
 #Game Loop
 #while game_playing == true do
 for i in 0..1 do 
     #sets player symbol
     player_symbol = player1_turn ? 'X' : 'O'
-    puts "#{player1_turn ? player1.name : player2.name}, it's your turn!"
+    puts "#{player1_turn ? player1_name.chomp : player2_name.chomp}, it's your turn!"
     # get player input and place the player's symbol in the desired location
     board.place_symbol(player_symbol)
     #output board state
