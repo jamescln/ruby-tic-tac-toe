@@ -22,7 +22,10 @@ class GameBoard
         @column = 0
     end
     def display_board
-        puts @board_array[0][0] + @board_array[0][1] + @board_array[0][2]
+        puts "Current Board State:"
+        puts "#{@board_array[0][0]}  #{@board_array[0][1]}  #{@board_array[0][2]}"
+        puts "#{@board_array[1][0]}  #{@board_array[1][1]}  #{@board_array[1][2]}"
+        puts "#{@board_array[2][0]}  #{@board_array[2][1]}  #{@board_array[2][2]}"
     end
     def row_select(row)
         @row = row.to_i - 1
@@ -31,7 +34,16 @@ class GameBoard
         @column = column.to_i - 1
     end
     def place_symbol(symbol)
-        @board_array[@row][@column] = symbol
+        puts "Enter the row you wish to select (1, 2 or 3)"
+        self.row_select(gets)
+        puts "Enter the column you wish to select (1, 2 or 3)"
+        self.column_select(gets)
+        if @board_array[@row][@column] != 'X' || @board_array[@row][@column] != 'O'
+            @board_array[@row][@column] = symbol
+        else
+            puts "That space is taken. Please select an empty space."
+            self.place_symbol(symbol)
+        end
     end
 end
 
@@ -47,10 +59,10 @@ player2 = Player.new(gets)
     #sets player symbol
     player_symbol = player1_turn ? 'X' : 'O'
     #get player input
-    puts "#{player1_turn ? player1.name : player2.name}, it's your turn! Enter the row you wish to select (1, 2 or 3)"
-    board.row_select(gets)
-    puts "Now enter the column you want to select (1, 2 or 3)"
-    board.column_select(gets)
+    puts "#{player1_turn ? player1.name : player2.name}, it's your turn!"
+    #board.row_select(gets)
+    #puts "Now enter the column you want to select (1, 2 or 3)"
+    #board.column_select(gets)
     #place the player's symbol in the desired location
     board.place_symbol(player_symbol)
     #output board state
