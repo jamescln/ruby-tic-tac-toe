@@ -1,7 +1,7 @@
 require 'pry-byebug'
 
 #Variables
-game_playing = true
+$game_playing = true
 player1_turn = true
 puts "Player 1, type your name!"
 player1_name = gets
@@ -10,7 +10,9 @@ player2_name = gets
 
 #Classes
 class GameBoard
-    def initialize
+    def initialize (player1 = 'player1',player2 = 'player2')
+        @player1_name = player1
+        @player2_name = player2
         @board_array = [['#','#','#'],['#','#','#'],['#','#','#']]
         @row = 0
         @column = 0
@@ -21,6 +23,9 @@ class GameBoard
         @player2_col_count = [0,0,0]
         @player2_diag_count = [0,0]
     end
+    def turn_set(turn)
+        @player1_turn = turn
+    end
     def display_board
         puts "Current Board State:"
         puts "#{@board_array[0][0]}  #{@board_array[0][1]}  #{@board_array[0][2]}"
@@ -29,9 +34,13 @@ class GameBoard
     end
     def row_select(row)
         @row = row.to_i - 1
+        @player1_turn ? @player1_row_count[@row] += 1 : @player2_row_count[@row] += 1
+        puts "player 1 row count #{@player1_row_count}"
     end
     def column_select(column)
         @column = column.to_i - 1
+        @player1_turn ? @player1_col_count[@column] += 1 : @player2_col_count[@column] += 1
+        puts "player 1 col count #{@player1_col_count}"
     end
     def place_symbol(symbol)
 
@@ -49,16 +58,31 @@ class GameBoard
         end
     end
     def check_winner
-       
+        if @player1_turn == true
+            for i in 0..2 do
+                if @player1_row_count[i] == 3 || @player1_col_count[i] == 3
+                    $game_playing = false
+                    puts "#{@player1_name.chomp} wins!"
+                end
+            end
+        else
+            for i in 0..2 do
+                if @player2_row_count[i] == 3 || @player2_col_count[i] == 3
+                    $game_playing = false
+                    puts "#{@player2_name.chomp} wins!"
+                end
+            end
+        end
     end
 end
 
 #Instances
-board = GameBoard.new
+board = GameBoard.new(player1_name,player2_name)
+board.turn_set(player1_turn)
 
 #Game Loop
-#while game_playing == true do
-for i in 0..1 do 
+while $game_playing == true do
+#for i in 0..1 do 
     #sets player symbol
     player_symbol = player1_turn ? 'X' : 'O'
     puts "#{player1_turn ? player1_name.chomp : player2_name.chomp}, it's your turn!"
@@ -70,4 +94,5 @@ for i in 0..1 do
     board.check_winner
     #change player turn and player symbol
     player1_turn ? player1_turn = false : player1_turn = true
+    board.turn_set(player1_turn)
 end
