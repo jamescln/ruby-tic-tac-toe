@@ -35,12 +35,10 @@ class GameBoard
     def row_select(row)
         @row = row.to_i - 1
         @player1_turn ? @player1_row_count[@row] += 1 : @player2_row_count[@row] += 1
-        puts "player 1 row count #{@player1_row_count}"
     end
     def column_select(column)
         @column = column.to_i - 1
         @player1_turn ? @player1_col_count[@column] += 1 : @player2_col_count[@column] += 1
-        puts "player 1 col count #{@player1_col_count}"
     end
     def place_symbol(symbol)
 
@@ -72,6 +70,13 @@ class GameBoard
                     puts "#{@player2_name.chomp} wins!"
                 end
             end
+        end
+        if @board_array[0][0] == 'X' && @board_array[1][1] == 'X' && @board_array[2][2] == 'X' || @board_array[0][2] == 'X' && @board_array[1][1] == 'X' && @board_array[2][0] == 'X'
+            $game_playing = false
+            puts "#{@player1_name.chomp} wins!"
+        elsif @board_array[0][0] == 'O' && @board_array[1][1] == 'O' && @board_array[2][2] == 'O' || @board_array[0][2] == 'O' && @board_array[1][1] == 'O' && @board_array[2][0] == 'O'
+            $game_playing = false
+            puts "#{@player2_name.chomp} wins!"
         end
     end
 end
