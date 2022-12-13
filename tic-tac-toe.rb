@@ -1,5 +1,12 @@
 require 'pry-byebug'
 
+arr = [['#','#','#'],['#','#','#'],['#','#','#']]
+arr_map = []
+arr.each do |i|
+  i.map{|j| arr_map << j}
+end
+arr_comparison = arr_map.any? {|i| i == '#'}
+
 #Variables
 $game_playing = true
 player1_turn = true
@@ -32,23 +39,35 @@ class GameBoard
         puts "#{@board_array[1][0]}  #{@board_array[1][1]}  #{@board_array[1][2]}"
         puts "#{@board_array[2][0]}  #{@board_array[2][1]}  #{@board_array[2][2]}"
     end
-    def row_select(row)
-        @row = row.to_i - 1
-        @player1_turn ? @player1_row_count[@row] += 1 : @player2_row_count[@row] += 1
-    end
     def column_select(column)
         @column = column.to_i - 1
-        @player1_turn ? @player1_col_count[@column] += 1 : @player2_col_count[@column] += 1
+        if @column == 0 || @column == 1 || @column == 2
+            @player1_turn ? @player1_col_count[@column] += 1 : @player2_col_count[@column] += 1
+        else
+            puts "Please select a valid value"
+            self.column_select(gets)
+        end
+    end
+    def row_select(row)
+        @row = row.to_i - 1
+        if @row == 0 || @row == 1 || @row == 2
+            @player1_turn ? @player1_row_count[@row] += 1 : @player2_row_count[@row] += 1
+        else
+            puts "Please select a valid value."
+            self.row_select(gets)
+        end
     end
     def place_symbol(symbol)
-
+        
+        puts "Enter the column you wish to select (1, 2 or 3)"
+        self.column_select(gets)
+        
         puts "Enter the row you wish to select (1, 2 or 3)"
         self.row_select(gets)
 
-        puts "Enter the column you wish to select (1, 2 or 3)"
-        self.column_select(gets)
-
         if @board_array[@row][@column] == 'X' || @board_array[@row][@column] == 'O'
+            @player1_turn ? @player1_row_count[@row] -= 1 : @player2_row_count[@row] -= 1
+            @player1_turn ? @player1_col_count[@column] -= 1 : @player2_col_count[@column] -= 1
             puts "That space is taken. Please select an empty space."
             self.place_symbol(symbol)
         else
@@ -79,6 +98,21 @@ class GameBoard
             puts "#{@player2_name.chomp} wins!"
         end
     end
+    def check_stalemate
+
+        @stalemate_array = []
+
+        @board_array.each do |i|
+           i.map {|j| @stalemate_array << j}
+        end
+        
+        @stalemate = @stalemate_array.any? {|i| i == '#'}
+        
+        if @stalemate == false
+            $game_playing = false
+            puts "It's a draw!"
+        end
+    end
 end
 
 #Instances
@@ -97,6 +131,8 @@ while $game_playing == true do
     board.display_board
     #check for a winner
     board.check_winner
+    #check for a stalemate
+    board.check_stalemate
     #change player turn and player symbol
     player1_turn ? player1_turn = false : player1_turn = true
     board.turn_set(player1_turn)
