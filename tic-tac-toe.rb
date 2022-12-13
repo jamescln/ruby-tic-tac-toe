@@ -14,6 +14,12 @@ class GameBoard
         @board_array = [['#','#','#'],['#','#','#'],['#','#','#']]
         @row = 0
         @column = 0
+        @player1_row_count = [0,0,0]
+        @player1_col_count = [0,0,0]
+        @player1_diag_count = [0,0]
+        @player2_row_count = [0,0,0]
+        @player2_col_count = [0,0,0]
+        @player2_diag_count = [0,0]
     end
     def display_board
         puts "Current Board State:"
@@ -43,34 +49,7 @@ class GameBoard
         end
     end
     def check_winner
-        check_1 = []
-        check_2 = []
-        check_3 = []
-        for i in 0..2 do
-            for j in 0..2 do
-                check_1 << @board_array[i][j]
-                check_2 << @board_array[j][i]
-            end
-            
-            unless check_1[0] == '#' || check_2[0] == '#'    
-                if check_1[0] == check_1[1] && check_1[0] == check_1[2]
-                    if check_1[0] == 'X'
-                        puts "#{player1_name} wins!"
-                    elsif check_1[0] == "O"
-                        puts "#{player2_name} wins!"
-                    end
-                elsif check_2[0] == check_2[1] && check_2[0] == check_2[2]
-                    if check_2[0] == 'X'
-                        puts "#{player1_name} wins!"
-                    elsif check_2[0] == "O"
-                        puts "#{player2_name} wins!"
-                    end
-                else
-                    check_1.clear
-                    check_2.clear
-                end
-            end
-        end
+       
     end
 end
 
