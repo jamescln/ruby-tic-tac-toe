@@ -1,12 +1,5 @@
 require 'pry-byebug'
 
-arr = [['#','#','#'],['#','#','#'],['#','#','#']]
-arr_map = []
-arr.each do |i|
-  i.map{|j| arr_map << j}
-end
-arr_comparison = arr_map.any? {|i| i == '#'}
-
 #Variables
 $game_playing = true
 player1_turn = true
@@ -105,7 +98,7 @@ class GameBoard
         @board_array.each do |i|
            i.map {|j| @stalemate_array << j}
         end
-        
+
         @stalemate = @stalemate_array.any? {|i| i == '#'}
         
         if @stalemate == false
