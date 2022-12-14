@@ -3,7 +3,7 @@
 require 'pry-byebug'
 
 # Variables
-$game_playing = true
+game_playing = true
 player1_turn = true
 puts 'Player 1, type your name!'
 player1_name = gets
@@ -39,7 +39,7 @@ class GameBoard
 
   def column_select(column)
     @column = column.to_i - 1
-    if @column == 0 || @column == 1 || @column == 2
+    if @column.zero? || @column == 1 || @column == 2
       @player1_turn ? @player1_col_count[@column] += 1 : @player2_col_count[@column] += 1
     else
       puts 'Please select a valid value'
@@ -49,7 +49,7 @@ class GameBoard
 
   def row_select(row)
     @row = row.to_i - 1
-    if @row == 0 || @row == 1 || @row == 2
+    if @row.zero? || @row == 1 || @row == 2
       @player1_turn ? @player1_row_count[@row] += 1 : @player2_row_count[@row] += 1
     else
       puts 'Please select a valid value.'
@@ -76,10 +76,14 @@ class GameBoard
 
   def check_winner
     if @player1_turn == true
-      for i in 0..2 do
-        if @player1_row_count[i] == 3 || @player1_col_count[i] == 3
-          $game_playing = false
-          puts "#{@player1_name.chomp} wins!"
+      @player1_row_count.each do |i|
+        if i == 3
+          return true
+        end 
+      end
+      @player1_row_count.each do |i|
+        if i == 3
+          return true
         end
       end
     else
@@ -120,7 +124,7 @@ board = GameBoard.new(player1_name, player2_name)
 board.turn_set(player1_turn)
 
 # Game Loop
-while $game_playing == true
+while game_playing == true
   # for i in 0..1 do
   # sets player symbol
   player_symbol = player1_turn ? 'X' : 'O'
@@ -134,6 +138,10 @@ while $game_playing == true
   # check for a stalemate
   board.check_stalemate
   # change player turn and player symbol
+  if board.check_winner
+    game_playing = false
+    puts "Winner!"
+  end
   player1_turn = player1_turn ? false : true
   board.turn_set(player1_turn)
 end
