@@ -21,12 +21,14 @@ while game_playing == true
   valid_move = false
 
   while valid_move == false
+    # generate an empty array
     player_move = []
-    # get player input to: select a column, then a row, then place their symbol.
+    # get player input and pass to the array
     puts 'Enter the column you wish to select (1, 2 or 3)'
     player_move << gets
     puts 'Enter the row you wish to select (1, 2 or 3)'
     player_move << gets
+    # pass the array to the board player_input method
     board.player_input(player_move)
     if board.move_validate
       board.place_symbol
@@ -34,17 +36,17 @@ while game_playing == true
     else
       puts 'Move invalid, please select an empty space'
     end
-    player_moves.clear
+    player_move.clear
   end
 
   # output board state to the console
   board.display_board
 
   # check for a winner or a stalemate
-  if board.check_winner || win_checker.check_stalemate
-    game_playing = false
-    puts board.check_winner ? 'Winner!' : "It's a draw!"
-  end
+  # if board.check_winner || win_checker.check_stalemate
+    # game_playing = false
+    # puts board.check_winner ? 'Winner!' : "It's a draw!"
+  # end
 
   board.change_player
 

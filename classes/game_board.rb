@@ -9,7 +9,7 @@ class GameBoard
     @p_symbol = 'X'
     @board = [['#', '#', '#'], ['#', '#', '#'], ['#', '#', '#']]
     @row = 0
-    @column = 0
+    @col = 0
   end
 
   # return the current board state
@@ -22,6 +22,16 @@ class GameBoard
     @p1_turn ? @p1_name.chomp : @p2_name.chomp
   end
 
+  # take an array, check if the elements are within an acceptable range
+  # then mutate the @col and @row variables to match
+  def player_input(player_move)
+    player_move.map! {|element| element.to_i}
+    return unless player_move.none? { |element| element < 1 || element > 3 }
+
+    @col = player_move[0] - 1
+    @row = player_move[1] - 1
+  end
+
   # switch the player1_turn and player_symbol instance variables
   def change_player
     @p1_turn = @p1_turn ? false : true
@@ -31,18 +41,10 @@ class GameBoard
   # output the current board state to the console in a 3x3 grid
   def display_board
     puts 'Current Board State:'
-    @board.index do |i|
-      puts "#{self[i][0]}  #{self[i][1]}  #{self[i][2]}"
+    @board.each do |i|
+      i.each {|j| print "#{j} "}
+      print "\n"
     end
-  end
-
-  # take an array, check if the elements are within an acceptable range
-  # then mutate the @col and @row variables to match
-  def player_input(player_move)
-    return unless player_move.none? { |element| element < 1 || element > 3 }
-
-    @col = player_move[0] - 1
-    @row = player_move[1] - 1
   end
 
   # return false unless the space selected by the player is empty
@@ -59,6 +61,6 @@ class GameBoard
 
   # place player symbol into board at the desired location
   def place_symbol
-    @board[@row][@column] = @p_symbol
+    @board[@col][@row] = @p_symbol
   end
 end
