@@ -25,7 +25,7 @@ class GameBoard
   # take an array, check if the elements are within an acceptable range
   # then mutate the @col and @row variables to match
   def player_input(player_move)
-    player_move.map! {|element| element.to_i}
+    player_move.map!(&:to_i)
     return unless player_move.none? { |element| element < 1 || element > 3 }
 
     @col = player_move[0] - 1
@@ -42,7 +42,7 @@ class GameBoard
   def display_board
     puts 'Current Board State:'
     @board.each do |i|
-      i.each {|j| print "#{j} "}
+      i.each { |j| print "#{j} " }
       print "\n"
     end
   end

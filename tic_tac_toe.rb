@@ -30,24 +30,24 @@ while game_playing == true
     player_move << gets
     # pass the array to the board player_input method
     board.player_input(player_move)
+    # call move_validate method to see if the move is legal
     if board.move_validate
       board.place_symbol
       valid_move = true
     else
       puts 'Move invalid, please select an empty space'
     end
+
+    # pass move information from board to win_checker
+    win_checker.add_counts(board.data_output)
+    # clear the array before the next turn
     player_move.clear
   end
 
   # output board state to the console
   board.display_board
 
-  # check for a winner or a stalemate
-  # if board.check_winner || win_checker.check_stalemate
-    # game_playing = false
-    # puts board.check_winner ? 'Winner!' : "It's a draw!"
-  # end
-
+  # change player
   board.change_player
 
 end
