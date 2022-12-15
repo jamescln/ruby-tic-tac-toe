@@ -23,6 +23,20 @@ class CheckWinner
     end
   end
 
+  # take board state data, evaluate if it's a diagonal, return true if true.
+  def diag_win(board)
+    diag1 = [board[0][0], board[1][1], board[2][2]]
+    diag2 = [board[0][2], board[1][1], board[2][0]]
+    win_arrs = [%w[X X X], %w[O O O]]
+    if win_arrs.include?(diag1)
+      true
+    elsif win_arrs.include?(diag2)
+      true
+    else
+      false
+    end
+  end
+
   # iterate over all c and r arrays, return true if an element == 3
   def col_row_win
     win = false
@@ -35,9 +49,7 @@ class CheckWinner
     win
   end
 
-  def diag_win; end
-
-  # acceptsa board state array as an argument. If the array has
+  # accepts a board state array as an argument. If the array has
   # no remaining '#' strings, return true.
   def check_stalemate(board_array)
     @stalemate_array = []

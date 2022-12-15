@@ -48,7 +48,7 @@ while game_playing == true
   board.display_board
 
   # check for a winner
-  if win_checker.col_row_win
+  if win_checker.col_row_win || win_checker.diag_win(board.current_board)
     game_playing = false
     puts "#{board.active_player} wins!"
   end
