@@ -49,7 +49,7 @@ class GameBoard
 
   # return false unless the space selected by the player is empty
   def move_validate
-    return false unless @board[@col][@row] == '#'
+    return false unless @board[@row][@col] == '#'
 
     true
   end
@@ -61,6 +61,6 @@ class GameBoard
 
   # place player symbol into board at the desired location
   def place_symbol
-    @board[@col][@row] = @p_symbol
+    @board[@row][@col] = @p_symbol
   end
 end
