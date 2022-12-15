@@ -23,6 +23,7 @@ class CheckWinner
     end
   end
 
+  # iterate over all c and r arrays, return true if an element == 3
   def col_row_win
     win = false
     game_win_array = [@p1_c_count, @p1_r_count, @p2_c_count, @p2_r_count]
@@ -36,6 +37,8 @@ class CheckWinner
 
   def diag_win; end
 
+  # acceptsa board state array as an argument. If the array has
+  # no remaining '#' strings, return true.
   def check_stalemate(board_array)
     @stalemate_array = []
 
