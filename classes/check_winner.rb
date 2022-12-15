@@ -24,13 +24,14 @@ class CheckWinner
   end
 
   def col_row_win
+    win = false
     game_win_array = [@p1_c_count, @p1_r_count, @p2_c_count, @p2_r_count]
-
     game_win_array.each do |i|
       i.each do |j|
-        return true if j == 3
+        win = true if j == 3
       end
     end
+    win
   end
 
   def diag_win; end

@@ -47,6 +47,12 @@ while game_playing == true
   # output board state to the console
   board.display_board
 
+  # check for a winner
+  if win_checker.col_row_win
+    game_playing = false
+    puts "#{board.active_player} wins!"
+  end
+
   # check for a stalemate
   if win_checker.check_stalemate(board.current_board)
     game_playing = false
