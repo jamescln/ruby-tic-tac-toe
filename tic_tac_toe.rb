@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry-byebug'
 require_relative 'classes/game_board'
 require_relative 'classes/check_winner'
 

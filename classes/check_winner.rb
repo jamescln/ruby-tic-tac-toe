@@ -6,10 +6,8 @@ class CheckWinner
   def initialize
     @p1_r_count = [0, 0, 0]
     @p1_c_count = [0, 0, 0]
-    @p1_di_count = [0, 0]
     @p2_r_count = [0, 0, 0]
     @p2_c_count = [0, 0, 0]
-    @p2_di_count = [0, 0]
   end
 
   # take an array with move data, increment the approptiate player count arrays
